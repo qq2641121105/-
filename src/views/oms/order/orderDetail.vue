@@ -94,6 +94,144 @@
     </div>
     </div>
 <!--    收获人信息-->
+    <div style="padding: 10px">
+      <div style="margin: 20px;width: 100%">
+        <span style="float:left">收获人信息</span>
+      </div>
+      <div  class="table-layout">
+        <el-row>
+          <el-col :span="6" class="table-cell-title">收货人</el-col>
+          <el-col :span="6" class="table-cell-title">手机号码</el-col>
+          <el-col :span="6" class="table-cell-title">邮政编码</el-col>
+          <el-col :span="6" class="table-cell-title">收货地址</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="6" class="table-cell ">{{orderInfo.receiverName}}</el-col>
+          <el-col :span="6" class="table-cell ">{{orderInfo.receiverPhone}}</el-col>
+          <el-col :span="6" class="table-cell ">{{orderInfo.receiverPostCode}}</el-col>
+          <el-col :span="6" class="table-cell ">{{orderInfo | filterAddress}}</el-col>
+        </el-row>
+      </div>
+    </div>
+<!--    商品信息-->
+    <div style="padding: 10px">
+      <div style="margin: 20px;width: 100%">
+        <span style="float:left">商品信息</span>
+      </div>
+      <el-table
+        ref="orderItemTable"
+        :data="orderInfo.orderItemList"
+        style="width: 100%;margin-top: 20px" border>
+        <el-table-column label="商品图片" width="120" align="center">
+          <template slot-scope="scope">
+            <img :src="scope.row.productPic" style="height: 80px">
+          </template>
+        </el-table-column>
+        <el-table-column label="商品名称" align="center">
+          <template slot-scope="scope">
+            <p>{{scope.row.productName}}</p>
+            <p>品牌：{{scope.row.productBrand}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="价格/货号" width="120" align="center">
+          <template slot-scope="scope">
+            <p>价格：￥{{scope.row.productPrice}}</p>
+            <p>货号：{{scope.row.productSn}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="属性" width="120" align="center">
+          <template slot-scope="scope">
+            {{scope.row.productAttr | filterProductAttr}}
+          </template>
+        </el-table-column>
+        <el-table-column label="数量" width="120" align="center">
+          <template slot-scope="scope">
+            {{scope.row.productQuantity}}
+          </template>
+        </el-table-column>
+        <el-table-column label="小计" width="120" align="center">
+          <template slot-scope="scope">
+            ￥{{scope.row.productPrice*scope.row.productQuantity}}
+          </template>
+        </el-table-column>
+      </el-table>
+      <div style="float:right;;">
+      合计:￥<span style="color: red">{{orderInfo.totalAmount}}</span>
+      </div>
+    </div>
+<!--    费用信息-->
+    <div style="padding: 10px">
+      <div style="margin: 20px;width: 100%">
+        <span style="float:left">费用信息</span>
+      </div>
+      <div  class="table-layout">
+        <el-row>
+          <el-col :span="6" class="table-cell-title">商品合计</el-col>
+          <el-col :span="6" class="table-cell-title">运费</el-col>
+          <el-col :span="6" class="table-cell-title">优惠券</el-col>
+          <el-col :span="6" class="table-cell-title">积分抵扣</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="6" class="table-cell ">￥{{orderInfo.totalAmount}}</el-col>
+          <el-col :span="6" class="table-cell ">￥{{orderInfo.freightAmount}}</el-col>
+          <el-col :span="6" class="table-cell ">￥{{orderInfo.couponAmount}}</el-col>
+          <el-col :span="6" class="table-cell ">￥{{orderInfo.integrationAmount}}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="6" class="table-cell-title">活动优惠</el-col>
+          <el-col :span="6" class="table-cell-title">折扣金额</el-col>
+          <el-col :span="6" class="table-cell-title">订单总金额</el-col>
+          <el-col :span="6" class="table-cell-title">应付款金额</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="6" class="table-cell ">￥{{orderInfo.promotionAmount}}</el-col>
+          <el-col :span="6" class="table-cell ">￥{{orderInfo.discountAmount}}</el-col>
+          <el-col :span="6" class="table-cell ">￥{{orderInfo.totalAmount+orderInfo.freightAmount}}</el-col>
+          <el-col :span="6" class="table-cell ">￥{{orderInfo.payAmount+orderInfo.freightAmount-orderInfo.discountAmount}}</el-col>
+        </el-row>
+      </div>
+    </div>
+<!--    操作信息-->
+    <div style="padding: 10px">
+      <div style="margin: 20px;width: 100%">
+        <span style="float:left">操作信息</span>
+      </div>
+      <el-table
+        ref="orderItemTable"
+        :data="orderInfo.historyList"
+        style="width: 100%;margin-top: 70px" border>
+        <el-table-column label="操作者" width="120" align="center">
+          <template slot-scope="scope">
+            <img :src="scope.row.operateMan" style="height: 80px">
+          </template>
+        </el-table-column>
+        <el-table-column label="操作时间" align="center" width="120">
+          <template slot-scope="scope">
+            <p>{{scope.row.createTime}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="订单状态" width="120" align="center">
+          <template slot-scope="scope">
+            <p>价格：￥{{scope.row.orderStatus | filterStatus}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="付款状态" width="120" align="center">
+          <template slot-scope="scope">
+            {{scope.row.orderStatus | filterPayType}}
+          </template>
+        </el-table-column>
+        <el-table-column label="发货状态" width="120" align="center">
+          <template slot-scope="scope">
+            {{scope.row.orderStatus | filterDeliverStatus}}
+          </template>
+        </el-table-column>
+        <el-table-column label="备注"  align="center">
+          <template slot-scope="scope">
+            ￥{{scope.row.note}}
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </el-card>
   </div>
 </template>
@@ -167,7 +305,53 @@
         }else{
           return value;
         }
-      }
+      },
+      filterAddress(order) {
+        let str = order.receiverProvince;
+        if (order.receiverCity != null) {
+          str += "  " + order.receiverCity;
+        }
+        str += "  " + order.receiverRegion;
+        str += "  " + order.receiverDetailAddress;
+        return str;
+      },
+      filterProductAttr(value){
+        if(value==null){
+          return '';
+        }else{
+          let attr = JSON.parse(value);
+          let result='';
+          for(let i=0;i<attr.length;i++){
+            result+=attr[i].key;
+            result+=":";
+            result+=attr[i].value;
+            result+=";";
+          }
+          return result;
+        }
+      },
+      filterStatus(value) {
+        if (value === 1) {
+          return '待发货';
+        } else if (value === 2) {
+          return '已发货';
+        } else if (value === 3) {
+          return '已完成';
+        } else if (value === 4) {
+          return '已关闭';
+        } else if (value === 5) {
+          return '无效订单';
+        } else {
+          return '待付款';
+        }
+      },
+      filterDeliverStatus(value) {
+        if (value === 0||value === 1) {
+          return '未发货';
+        } else {
+          return '已发货';
+        }
+      },
     }
   }
 </script>

@@ -123,27 +123,26 @@ export const asyncRouterMap = [
         meta: {title: '订单详情'},
         hidden:true
       },
-    ]
-  },
-  {
-    path: '/sms',
-    component: Layout,
-    redirect: '/sms/coupon',
-    name: 'sms',
-    meta: {title: '营销', icon: 'el-icon-s-management'},
-    children: [{
-      path: 'flash',
-      name: 'flash',
-      // component: () => import('@/views/pms/product/index'),
-      meta: {title: '营销列表', icon: 'product-list'}
-    },
       {
-        path: 'flashSession',
-        name: 'flashSession',
-        // component: () => import('@/views/sms/flash/sessionList'),
-        meta: {title: '秒杀时间段列表'},
-        hidden:true
-      },]
+        path: 'orderSetting',
+        name: 'orderSetting',
+        component: () => import('@/views/oms/order/setting'),
+        meta: {title: '订单设置'}
+      },
+      {
+        path: 'returnApply',
+        name: 'returnApply',
+        component: () => import('@/views/oms/apply/index'),
+        meta: {title: '退货申请处理', icon: 'order-return'}
+      },
+      {
+        path: 'returnReasonDetail',
+        name: 'returnReasonDetail',
+        component: () => import('@/views/oms/apply/deatil'),
+        meta: {title: '退货原因详情'},
+        hidden: true
+      },
+    ]
   },
   {
     path:'/ums',
