@@ -19,6 +19,5 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+//图片预览
+- ![view1.png](view1.png)
